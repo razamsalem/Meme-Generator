@@ -3,8 +3,6 @@
 renderGallery()
 
 function renderGallery() {
-    // console.log('renderGallery checkV')
-
     const elImgSection = document.querySelector('.images')
 
     let strHtml = ''
@@ -16,6 +14,7 @@ function renderGallery() {
 
 function onImgSelect(id) {
     setImg(id)
+    saveSelectedImgToStorage(id)
     renderMeme()
 }
 

@@ -21,11 +21,18 @@
 
     <section class="meme-editor hidden">
         <button class="btn btn-back">Back</button>
-        <div class="text">
+
+        <div class="buttons">
             <label for="text-meme"></label>
-            <input id="text-meme" class="text-line" type="text" placeholder="Your Meme Text">
+            <input type="text" id="text-meme" class="text-line" placeholder="Your Meme Text">
+            <button class="btn btn-increase-font">+</button>
+            <button class="btn btn-decrease-font">-</button>
+            <br>
+            <input type="color" id="color-picker" class="color-picker" value="#ffffff">
         </div>
+
         <canvas height="500" width="500"></canvas>
+        
         <div class="dowlonad-link">
             <a href="#" class="a-download" download="my-meme">Download</a>
         </div>
@@ -35,7 +42,6 @@
     <script src="js/services/utils-service.js"></script>
     <script src="js/storage/meme-storage.js"></script>
     <script src="js/services/meme-service.js"></script>
-    <script src="js/services/gallery-service.js"></script>
     <script src="js/controllers/gallery-controller.js"></script>
     <script src="js/controllers/meme-controller.js"></script>
 </body>

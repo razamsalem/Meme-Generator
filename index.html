@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
     
     <h1>Meme Generator</h1>
-
+    <!-- TODO: call the function from controller with addlistiner-->
+    <label for="text-meme"></label>
+    <input id="text-meme" class="text-line" type="text" placeholder="Your Meme Text" oninput="updateMemeText()">
     <section class="image-gallery">
 
     </section>

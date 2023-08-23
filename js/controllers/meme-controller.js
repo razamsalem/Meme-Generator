@@ -24,6 +24,7 @@ function onInit() {
 }
 
 function addListiners() {
+    gElCanvas.addEventListener('click', onCanvasClick)
     getEl('.text-line').addEventListener('input', onUpdateMemeText)
     getEl('.color-picker').addEventListener('input', onUpdateTextColor)
     getEl('.btn-back').addEventListener('click', hideEditor)
@@ -55,6 +56,7 @@ function renderMeme() {
                 gCtx.lineWifth = 2
                 gCtx.strokeRect(10, 20 + idx * 40 - line.size + 20, gElCanvas.width - 20, line.size + 10)
             }
+
         })
     }
 
@@ -128,9 +130,29 @@ function onRemoveLine() {
     if (meme.lines.length <= 1) return
     meme.lines.splice(meme.selectedLineIdx, 1)
     meme.selectedLineIdx = Math.max(0, meme.selectedLineIdx - 1)
-    
+
     saveMemeToStorage(meme)
     renderMeme()
+}
+
+function onCanvasClick(event) {
+    const canvasPos = gElCanvas.getBoundingClientRect()
+    const canvasX = event.clientX - canvasPos.left
+    const canvasY = event.clientY - canvasPos.top
+
+    const meme = getMeme()
+    meme.lines.forEach((line, idx) => {
+        const lineY = 40 + idx * 40
+        if (
+            canvasX >= 10 &&
+            canvasX <= gElCanvas.width - 10 &&
+            canvasY >= lineY - line.size &&
+            canvasY <= lineY
+        ) {
+            meme.selectedLineIdx = idx
+            renderMeme()
+        }
+    })
 }
 
 function showEditor() {

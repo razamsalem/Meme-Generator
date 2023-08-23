@@ -25,6 +25,7 @@ function onInit() {
 
 function addListiners() {
     gElCanvas.addEventListener('click', onCanvasClick)
+    gElCanvas.addEventListener('touchstart', onCanvasClick)
     getEl('.text-line').addEventListener('input', onUpdateMemeText)
     getEl('.color-picker').addEventListener('input', onUpdateTextColor)
     getEl('.btn-back').addEventListener('click', hideEditor)
@@ -137,8 +138,17 @@ function onRemoveLine() {
 
 function onCanvasClick(event) {
     const canvasPos = gElCanvas.getBoundingClientRect()
-    const canvasX = event.clientX - canvasPos.left
-    const canvasY = event.clientY - canvasPos.top
+    let canvasX
+    let canvasY
+
+    if (event.type === 'click') {
+        canvasX = event.clientX - canvasPos.left
+        canvasY = event.clientY - canvasPos.top
+    } else if (event.type === 'touchstart') {
+        const touch = event.touches[0]
+        canvasX = touch.clientX - canvasPos.left
+        canvasY = touch.clientY - canvasPos.top
+    }
 
     const meme = getMeme()
     meme.lines.forEach((line, idx) => {

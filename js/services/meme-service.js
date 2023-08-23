@@ -15,7 +15,7 @@ var gMeme = {
         {
             txt: 'Your Text',
             size: 20,
-            color: 'white'
+            color: '#ffffff'
         }
     ]
 }

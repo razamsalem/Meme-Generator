@@ -15,6 +15,7 @@ function onInit() {
 function addListiners() {
     getEl('.text-line').addEventListener('input', updateMemeText)
     getEl('.btn-back').addEventListener('click', hideEditor)
+    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
 }
 
 function renderMeme() {
@@ -31,13 +32,13 @@ function renderMeme() {
         gCtx.textAlign = 'center'
         gCtx.fillText(memeTxt, gElCanvas.width / 2, 40)
     }
+
 }
 
 function updateMemeText() {
     const newText = document.querySelector('.text-line').value
     const meme = getMeme()
     meme.lines[0].txt = newText
-    // console.log(gMeme.lines[0].txt)
     renderMeme()
 }
 
@@ -55,4 +56,9 @@ function hideEditor() {
 
     elGallerySection.classList.remove('hidden')
     elMemeEditorSection.classList.add('hidden')
+}
+
+function downloadMeme(elLink) {
+    const dataUrl = gElCanvas.toDataURL()
+    elLink.href = dataUrl
 }

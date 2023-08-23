@@ -2,3 +2,8 @@ body {
     margin: 0;
     text-align: center;
 }
+
+.image-gallery img {
+    width: 200px;
+    cursor: pointer;
+}

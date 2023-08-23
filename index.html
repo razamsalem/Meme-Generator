@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,24 @@
     <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
-    
-    <h1>Meme Generator</h1>
-    <!-- TODO: call the function from controller with addlistiner-->
-    <label for="text-meme"></label>
-    <input id="text-meme" class="text-line" type="text" placeholder="Your Meme Text" oninput="updateMemeText()">
-    <section class="image-gallery">
 
+<body>
+
+    <h1>Meme Generator</h1>
+    <section class="image-gallery">
+        <h2>gallery for your use</h2>
+        <div class="images">
+            <img src="img/1.jpg" alt="">
+            <img src="img/8.jpg" alt="">
+        </div>
     </section>
 
     <section class="meme-editor">
+        <div class="text">
+            <!-- TODO: call the function from controller with addlistiner-->
+            <label for="text-meme"></label>
+            <input id="text-meme" class="text-line" type="text" placeholder="Your Meme Text" oninput="updateMemeText()">
+        </div>
         <canvas height="500" width="500"></canvas>
     </section>
 
@@ -25,7 +33,9 @@
     <script src="js/services/utils-service.js"></script>
     <script src="js/storage/meme-storage.js"></script>
     <script src="js/services/meme-service.js"></script>
+    <script src="js/services/gallery-service.js"></script>
+    <script src="js/controllers/gallery-controller.js"></script>
     <script src="js/controllers/meme-controller.js"></script>
-    <script src="js/app.js"></script>
 </body>
+
 </html>

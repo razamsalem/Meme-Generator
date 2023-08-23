@@ -1,5 +1,7 @@
 'use strict'
 
+const STORAGE_KEY = 'imgDB'
+
 function saveToStorage(key, val) {
     const json = JSON.stringify(val)
     localStorage.setItem(key, json)

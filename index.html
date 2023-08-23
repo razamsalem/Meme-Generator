@@ -5,13 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
+    <script src="https://kit.fontawesome.com/5339eb0f7c.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body>
+    <header class="flex space-between align-center">
+        <div class="logo">
+            <img src="img/logo-white.png" alt="logo">
+        </div>
+        <nav class="main-nav-container">
+            <ul class="main-nav flex clean-list">
+                <li><a href="#" class="gallery-link">Gallery</a></li>
+                <li><a href="#">Memes</a></li>
+                <li><a href="#" class="about-link">About</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h1>Meme Generator</h1>
     <section class="image-gallery">
         <h2>gallery for your use</h2>
         <div class="images">
@@ -21,7 +33,6 @@
 
     <section class="meme-editor hidden">
         <button class="btn btn-back">Back</button>
-
         <div class="buttons">
             <label for="text-meme"></label>
             <input type="text" id="text-meme" class="text-line" placeholder="Your Meme Text">
@@ -41,6 +52,23 @@
             <a href="#" class="a-download" download="my-meme">Download</a>
         </div>
     </section>
+
+    <section class="about hidden">
+        <h1>Thank you!</h1>
+
+        <p>Thank you for visiting and using my app <br> The app is designed to laugh and have fun with your friends, I
+            would appreciate your support! <br>
+            Hope you will have a good time 👋</p>
+        <br>
+        <div class="social-links">
+            <a target="_blank" href="https://www.linkedin.com/in/raz-amsalem207/"><i class="fa-brands fa-linkedin-in fa-2xl"></i></a>
+            <a target="_blank" href="https://github.com/razamsalem"><i class="fa-brands fa-github fa-2xl"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <h3>Raz Amsalem &copy; 2023</h3>
+    </footer>
 
 
     <script src="js/services/utils-service.js"></script>

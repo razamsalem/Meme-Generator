@@ -1,13 +1,18 @@
-body {
-    margin: 0;
-    text-align: center;
-}
+/* SETUP */
+@import url("./setup/vars.css");
+@import url("./setup/typography.css");
 
-.image-gallery img {
-    width: 200px;
-    cursor: pointer;
-}
+/* BASICS  */
+@import url("./basics/base.css");
+@import url("./basics/layout.css");
+@import url("./basics/helpers.css");
 
-.hidden {
-    display: none;
-}
+/* COMPONENTS */
+@import url("./components/header.css");
+@import url("./components/gallery.css");
+@import url("./components/social-links.css");
+@import url("./components/footer.css");
+
+
+/* MEDIA QUERIES */
+@import url("./setup/mq.css");

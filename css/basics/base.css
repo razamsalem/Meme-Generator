@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+    height: 100vh;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

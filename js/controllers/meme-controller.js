@@ -28,13 +28,16 @@ function addListiners() {
     gElCanvas.addEventListener('touchstart', onCanvasClick)
     getEl('.text-line').addEventListener('input', onUpdateMemeText)
     getEl('.color-picker').addEventListener('input', onUpdateTextColor)
+    getEl('.gallery-link').addEventListener('click', hideEditor)
+    getEl('.about-link').addEventListener('click', showAbout)
     getEl('.btn-back').addEventListener('click', hideEditor)
-    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
     getEl('.btn-increase-font').addEventListener('click', onIncreaseFontSize)
     getEl('.btn-decrease-font').addEventListener('click', onDecreaseFontSize)
     getEl('.btn-add-line').addEventListener('click', onAddLine)
     getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
     getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
+    getEl('.logo').addEventListener('click', hideEditor)
+    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
 }
 
 function renderMeme() {
@@ -53,8 +56,8 @@ function renderMeme() {
             gCtx.fillText(line.txt, gElCanvas.width / 2, 40 + idx * 40)
 
             if (idx === meme.selectedLineIdx) {
-                gCtx.strokeSyle = 'black'
-                gCtx.lineWifth = 2
+                gCtx.strokeStyle = 'black'
+                gCtx.lineWidth = 2
                 gCtx.strokeRect(10, 20 + idx * 40 - line.size + 20, gElCanvas.width - 20, line.size + 10)
             }
 
@@ -67,16 +70,21 @@ function renderMeme() {
         getEl('.btn-remove-line').classList.add('hidden')
     }
 
-    getEl('.text-line').value = selectedLine.txt
-    getEl('.color-picker').value = selectedLine.color
+    if (selectedLine) {
+        getEl('.text-line').value = selectedLine.txt
+        getEl('.color-picker').value = selectedLine.color
+    }
 }
 
 function onUpdateMemeText() {
     const newText = document.querySelector('.text-line').value
     const meme = getMeme()
-    meme.lines[meme.selectedLineIdx].txt = newText
-    saveMemeToStorage(meme)
-    renderMeme()
+
+    if (meme.selectedLineIdx !== -1) {
+        meme.lines[meme.selectedLineIdx].txt = newText
+        saveMemeToStorage(meme)
+        renderMeme()
+    }
 }
 
 function onUpdateTextColor(event) {
@@ -136,6 +144,13 @@ function onRemoveLine() {
     renderMeme()
 }
 
+function deselectText() {
+    const meme = getMeme()
+    meme.selectedLineIdx = -1
+    saveMemeToStorage(meme)
+    renderMeme()
+}
+
 function onCanvasClick(event) {
     const canvasPos = gElCanvas.getBoundingClientRect()
     let canvasX
@@ -151,6 +166,8 @@ function onCanvasClick(event) {
     }
 
     const meme = getMeme()
+    let clickedOnText = false
+
     meme.lines.forEach((line, idx) => {
         const lineY = 40 + idx * 40
         if (
@@ -159,17 +176,25 @@ function onCanvasClick(event) {
             canvasY >= lineY - line.size &&
             canvasY <= lineY
         ) {
+            clickedOnText = true
             meme.selectedLineIdx = idx
             renderMeme()
         }
     })
+
+    if (!clickedOnText) {
+        meme.selectedLineIdx = -1
+        renderMeme()
+    }
 }
 
 function showEditor() {
     const elGallerySection = document.querySelector('.image-gallery')
     const elMemeEditorSection = document.querySelector('.meme-editor')
+    const elAboutSection = document.querySelector('.about')
 
     elGallerySection.classList.add('hidden')
+    elAboutSection.classList.add('hidden')
     elMemeEditorSection.classList.remove('hidden')
 
     saveStateToStorage('memeEditor')
@@ -178,11 +203,24 @@ function showEditor() {
 function hideEditor() {
     const elGallerySection = document.querySelector('.image-gallery')
     const elMemeEditorSection = document.querySelector('.meme-editor')
+    const elAboutSection = document.querySelector('.about')
 
     elGallerySection.classList.remove('hidden')
     elMemeEditorSection.classList.add('hidden')
+    elAboutSection.classList.add('hidden')
 
     saveStateToStorage('gallery')
+}
+
+function showAbout() {
+    const elGallerySection = document.querySelector('.image-gallery')
+    const elMemeEditorSection = document.querySelector('.meme-editor')
+    const elAboutSection = document.querySelector('.about')
+
+    elGallerySection.classList.add('hidden')
+    elMemeEditorSection.classList.add('hidden')
+    elAboutSection.classList.remove('hidden')
+
 }
 
 function downloadMeme(elLink) {

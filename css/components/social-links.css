@@ -1,0 +1,21 @@
+.fa-brands {
+    cursor: pointer;
+    margin-inline: 5px;
+}
+
+.fa-github {
+    color: #6cc644;
+}
+
+
+.fa-linkedin-in {
+    color: #0077b5;
+}
+
+.fa-github:hover {
+    color: #519733;
+}
+
+.fa-linkedin-in:hover {
+    color: #025e90;
+}

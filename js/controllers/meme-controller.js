@@ -8,8 +8,15 @@ var gCtx
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
+    addListiners()
     renderMeme()
 }
+
+function addListiners() {
+    getEl('.text-line').addEventListener('input', updateMemeText)
+    getEl('.btn-back').addEventListener('click', hideEditor)
+}
+
 function renderMeme() {
     const meme = getMeme()
     const memeTxt = meme.lines[0].txt
@@ -18,7 +25,7 @@ function renderMeme() {
     elImg.src = `img/${meme.selectedImgId}.jpg`
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, elImg.naturalWidth, elImg.naturalHeight)
-    
+
         gCtx.fillStyle = 'white'
         gCtx.font = '30px Arial'
         gCtx.textAlign = 'center'
@@ -32,4 +39,20 @@ function updateMemeText() {
     meme.lines[0].txt = newText
     // console.log(gMeme.lines[0].txt)
     renderMeme()
+}
+
+function showEditor() {
+    const elGallerySection = document.querySelector('.image-gallery')
+    const elMemeEditorSection = document.querySelector('.meme-editor')
+
+    elGallerySection.classList.add('hidden')
+    elMemeEditorSection.classList.remove('hidden')
+}
+
+function hideEditor() {
+    const elGallerySection = document.querySelector('.image-gallery')
+    const elMemeEditorSection = document.querySelector('.meme-editor')
+
+    elGallerySection.classList.remove('hidden')
+    elMemeEditorSection.classList.add('hidden')
 }

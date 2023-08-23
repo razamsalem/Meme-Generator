@@ -7,3 +7,7 @@ body {
     width: 200px;
     cursor: pointer;
 }
+
+.hidden {
+    display: none;
+}

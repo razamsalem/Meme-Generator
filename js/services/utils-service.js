@@ -1,5 +1,9 @@
 'use strict'
 
+function getEl(selector){
+    return document.querySelector(selector)
+}
+
 function showRealTimeAge(newVal) {
     const elAgeSpan = document.querySelector('.RealTimeAge').innerHTML = newVal
 }
@@ -58,3 +62,4 @@ function getRandomPrice() {
     const possible = ['1.99', '2.99', '3.99', '4.99', '5.99', '6.99', '7.99', '8.99', '9.99', '10.99', '11.99', '12.99', '13.99', '14.99']
     return possible[getRandomIntInclusive(0, possible.length - 1)]
 }
+

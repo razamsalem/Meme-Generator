@@ -25,7 +25,7 @@
     </header>
 
     <section class="image-gallery">
-        <h2>gallery for your use</h2>
+        <h2>Memes Gallery</h2>
         <div class="images">
             <!-- <img src="img/1.jpg"> -->
         </div>
@@ -33,23 +33,26 @@
 
     <section class="meme-editor hidden">
         <button class="btn btn-back">Back</button>
-        <div class="buttons">
-            <label for="text-meme"></label>
-            <input type="text" id="text-meme" class="text-line" placeholder="Your Meme Text">
-            <button class="btn btn-increase-font">+</button>
-            <button class="btn btn-decrease-font">-</button>
-            <br>
-            <button class="btn btn-add-line">Add Line</button>
-            <button class="btn btn-switch-line">Switch Line</button>
-            <button class="btn btn-remove-line">Remove Line</button>
-            <br>
-            <input type="color" id="color-picker" class="color-picker" value="#ffffff">
-        </div>
+        <div class="grid-container">
+            <div class="canvas-container">
+                <canvas height="500" width="500"></canvas>
+            </div>
 
-        <canvas height="500" width="500"></canvas>
+            <div class="buttons">
+                <label for="text-meme"></label>
+                <input type="text" id="text-meme" class="text-line" placeholder="Your Meme Text">
+                <button class="btn btn-increase-font">+</button>
+                <button class="btn btn-decrease-font">-</button>
+                <br>
+                <button class="btn btn-add-line">Add Line</button>
+                <button class="btn btn-switch-line">Switch Line</button>
+                <button class="btn btn-remove-line">Remove Line</button>
+                <input type="color" id="color-picker" class="color-picker" value="#ffffff">
+            </div>
 
-        <div class="dowlonad-link">
-            <a href="#" class="a-download" download="my-meme">Download</a>
+            <div class="dowlonad-link">
+                <a href="#" class="a-download" download="my-meme">Download Meme</a>
+            </div>
         </div>
     </section>
 
@@ -61,7 +64,8 @@
             Hope you will have a good time 👋</p>
         <br>
         <div class="social-links">
-            <a target="_blank" href="https://www.linkedin.com/in/raz-amsalem207/"><i class="fa-brands fa-linkedin-in fa-2xl"></i></a>
+            <a target="_blank" href="https://www.linkedin.com/in/raz-amsalem207/"><i
+                    class="fa-brands fa-linkedin-in fa-2xl"></i></a>
             <a target="_blank" href="https://github.com/razamsalem"><i class="fa-brands fa-github fa-2xl"></i></a>
         </div>
     </section>

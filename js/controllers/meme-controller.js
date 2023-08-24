@@ -26,6 +26,7 @@ function onInit() {
 function addListiners() {
     gElCanvas.addEventListener('click', onCanvasClick)
     gElCanvas.addEventListener('touchstart', onCanvasClick)
+    getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
     getEl('.text-line').addEventListener('input', onUpdateMemeText)
     getEl('.color-picker').addEventListener('input', onUpdateTextColor)
     getEl('.gallery-link').addEventListener('click', hideEditor)

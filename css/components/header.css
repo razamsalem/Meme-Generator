@@ -1,5 +1,5 @@
 header {
-    background: linear-gradient(-80deg, #e11f12 0%, #b90c8b 100%);
+    background: linear-gradient(-80deg, var(--clrPrimary3) 0%, var(--clrPrimary) 100%);
 }
 
 header img {

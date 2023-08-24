@@ -1,7 +1,10 @@
 body {
+    font-family:'Poppins', sans-serif;
     margin: 0;
     height: 100vh;
     text-align: center;
+    background-color: var(--clrPrimary2);
+    color: var(--clrPrimary-1);
 }
 
 .hidden {

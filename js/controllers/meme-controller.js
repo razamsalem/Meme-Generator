@@ -2,9 +2,11 @@
 
 onload = onInit
 
-var gElCanvas
-var gCtx
-var gSelectedColor
+
+let gElCanvas
+let gCtx
+let gSelectedColor
+
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
@@ -23,29 +25,35 @@ function onInit() {
 }
 
 function addListiners() {
+
+    //General
     gElCanvas.addEventListener('click', onCanvasClick)
     gElCanvas.addEventListener('touchstart', onCanvasClick)
-    getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
-    getEl('.text-line').addEventListener('input', onUpdateMemeText)
-    getEl('.color-picker').addEventListener('input', onUpdateTextColor)
-    getEl('.gallery-link').addEventListener('click', hideEditor)
-    getEl('.about-link').addEventListener('click', showAbout)
-    getEl('.btn-back').addEventListener('click', hideEditor)
-    getEl('.btn-increase-font').addEventListener('click', onIncreaseFontSize)
-    getEl('.btn-decrease-font').addEventListener('click', onDecreaseFontSize)
-    getEl('.btn-add-line').addEventListener('click', onAddLine)
-    getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
-    getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
-    getEl('.logo').addEventListener('click', hideEditor)
-    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
-    getEl('.hamburger').addEventListener('click', () => {hamburger.classList.toggle('active'); navMenu.classList.toggle('active')})
     document.addEventListener('click', (event) => {
         if (!event.target.closest('.main-nav') && !event.target.closest('.hamburger')) {
             hamburger.classList.remove('active')
             navMenu.classList.remove('active')
         }
     })
-    
+
+    //Controls
+    getEl('.btn-back').addEventListener('click', hideEditor)
+    getEl('.text-line').addEventListener('input', onUpdateMemeText)
+    getEl('.color-picker').addEventListener('input', onUpdateTextColor)
+    getEl('.btn-increase-font').addEventListener('click', onIncreaseFontSize)
+    getEl('.btn-decrease-font').addEventListener('click', onDecreaseFontSize)
+    getEl('.btn-add-line').addEventListener('click', onAddLine)
+    getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
+    getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
+    getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
+    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
+
+    //Nav
+    getEl('.logo').addEventListener('click', hideEditor)
+    getEl('.gallery-link').addEventListener('click', hideEditor)
+    getEl('.about-link').addEventListener('click', showAbout)
+    getEl('.hamburger').addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active') })
+
 }
 
 function renderMeme() {

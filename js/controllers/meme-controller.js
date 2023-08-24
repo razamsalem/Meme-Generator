@@ -45,6 +45,11 @@ function addListiners() {
     getEl('.btn-add-line').addEventListener('click', onAddLine)
     getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
     getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
+    getEl('.font-family-select').addEventListener('change', onUpdateFontFamily)
+    getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'));
+    getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'));
+    getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'));
+
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
     getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
 
@@ -53,7 +58,12 @@ function addListiners() {
     getEl('.gallery-link').addEventListener('click', hideEditor)
     getEl('.about-link').addEventListener('click', showAbout)
     getEl('.hamburger').addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active') })
-
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active')
+            navMenu.classList.remove('active')
+        })
+    })
 }
 
 function renderMeme() {
@@ -67,8 +77,8 @@ function renderMeme() {
 
         meme.lines.forEach((line, idx) => {
             gCtx.fillStyle = line.color
-            gCtx.font = `${line.size}px Arial`
-            gCtx.textAlign = 'center'
+            gCtx.font = `${line.size}px ${line.fontFamily}`
+            gCtx.textAlign = line.textAlign || 'center'
             gCtx.fillText(line.txt, gElCanvas.width / 2, 40 + idx * 40)
 
             if (idx === meme.selectedLineIdx) {
@@ -87,6 +97,7 @@ function renderMeme() {
     }
 
     if (selectedLine) {
+        getEl('.font-family-select').value = selectedLine.fontFamily
         getEl('.text-line').value = selectedLine.txt
         getEl('.color-picker').value = selectedLine.color
     }
@@ -128,11 +139,27 @@ function onDecreaseFontSize() {
     renderMeme()
 }
 
+function onUpdateFontFamily() {
+    const selectedFont = getEl('.font-family-select').value
+    const meme = getMeme()
+    meme.lines[meme.selectedLineIdx].fontFamily = selectedFont
+    saveMemeToStorage(meme)
+    renderMeme()
+}
+
+function onUpdateTextAlignment(alignment) {
+    const meme = getMeme()
+    meme.lines[meme.selectedLineIdx].textAlign = alignment
+    saveMemeToStorage(meme)
+    renderMeme()
+}
+
 function onAddLine() {
     const newLine = {
         txt: 'Your Text',
         size: 20,
-        color: '#ffffff'
+        color: '#ffffff',
+        fontFamily: 'Impact'
     }
 
     const meme = getMeme()

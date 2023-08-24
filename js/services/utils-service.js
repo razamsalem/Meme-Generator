@@ -1,4 +1,5 @@
 'use strict'
+const navLinks = document.querySelectorAll('.main-nav a')
 const hamburger = getEl('.hamburger')
 const navMenu = getEl('.main-nav')
 

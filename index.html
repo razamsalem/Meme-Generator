@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,9 +32,9 @@
 
     <section class="image-gallery">
         <h2>Memes Gallery</h2>
-            <div class="images">
-                <!-- <img src="img/1.jpg"> -->
-            </div>
+        <div class="images">
+            <!-- <img src="img/1.jpg"> -->
+        </div>
     </section>
 
     <section class="meme-editor hidden">
@@ -46,12 +47,27 @@
             <div class="buttons">
                 <label for="text-meme"></label>
                 <input type="text" id="text-meme" class="text-line" placeholder="Your Meme Text">
-                <button class="btn btn-increase-font">+</button>
-                <button class="btn btn-decrease-font">-</button>
+                <button class="btn btn-increase-font"><i class="fa-solid fa-font"></i>+</button>
+                <button class="btn btn-decrease-font"><i class="fa-solid fa-font"></i>-</button>
+                <button class="btn btn-add-line"><i class="fa-solid fa-plus"></i></button>
+                <button class="btn btn-switch-line"><i class="fa-solid fa-repeat"></i></button>
+                <button class="btn btn-remove-line"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
                 <br>
-                <button class="btn btn-add-line">Add Line</button>
-                <button class="btn btn-switch-line">Switch Line</button>
-                <button class="btn btn-remove-line">Remove Line</button>
+                <select id="font-family-select" class="font-family-select">
+                    <option value="Impact">Impact</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Oswald">Oswald</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+                <button class="btn btn-align-right"><i class="fa-solid fa-align-left"></i></button>
+                <button class="btn btn-align-center"><i class="fa-solid fa-align-center"></i></button>
+                <button class="btn btn-align-left"><i class="fa-solid fa-align-right"></i></button>
+                <br>
+                <button class="btn btn-up"><i class="fa-solid fa-arrow-up"></i></button>
+                <button class="btn btn-down"><i class="fa-solid fa-arrow-down"></i></button>
+                <br>
+                <h3 class="color-txt">COLOR</h3>
                 <input type="color" id="color-picker" class="color-picker" value="#ffffff">
             </div>
 

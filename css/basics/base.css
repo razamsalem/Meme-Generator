@@ -1,5 +1,5 @@
 body {
-    font-family:'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     height: 100vh;
     text-align: center;
@@ -7,6 +7,25 @@ body {
     color: var(--clrPrimary-1);
 }
 
+.images div {
+    display: inline;
+}
+
 .hidden {
     display: none;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    margin-inline-end: 5px;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    background-color: white;
 }

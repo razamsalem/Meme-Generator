@@ -5,7 +5,6 @@ onload = onInit
 var gElCanvas
 var gCtx
 var gSelectedColor
-
 function onInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
@@ -39,6 +38,14 @@ function addListiners() {
     getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
     getEl('.logo').addEventListener('click', hideEditor)
     getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
+    getEl('.hamburger').addEventListener('click', () => {hamburger.classList.toggle('active'); navMenu.classList.toggle('active')})
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.main-nav') && !event.target.closest('.hamburger')) {
+            hamburger.classList.remove('active')
+            navMenu.classList.remove('active')
+        }
+    })
+    
 }
 
 function renderMeme() {

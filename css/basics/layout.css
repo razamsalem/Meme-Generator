@@ -23,3 +23,6 @@
     margin-top: 20px;
 }
 
+.image-gallery .images {
+    display: block;
+}

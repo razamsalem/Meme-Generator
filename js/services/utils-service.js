@@ -1,4 +1,6 @@
 'use strict'
+const hamburger = getEl('.hamburger')
+const navMenu = getEl('.main-nav')
 
 function getEl(selector){
     return document.querySelector(selector)

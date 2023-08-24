@@ -7,7 +7,8 @@ function renderGallery() {
 
     let strHtml = ''
     for (let i = 1; i <= 18; i++) {
-        strHtml += `<img src="img/${i}.jpg" onclick="onImgSelect(${i}); showEditor()">`
+        const imgContainerClass = i % 2 === 1 ? 'image-container odd' : 'image-container even'
+        strHtml += `<div class="${imgContainerClass}"><img src="img/${i}.jpg" onclick="onImgSelect(${i}); showEditor()"></div>`
     }
     elImgSection.innerHTML = strHtml
 }

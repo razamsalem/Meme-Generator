@@ -6,11 +6,17 @@ onload = onInit
 let gElCanvas
 let gCtx
 let gSelectedColor
+let gGradient
 
 function onInit() {
-    gElCanvas = document.querySelector('canvas')
+    gElCanvas = getEl('canvas')
     gCtx = gElCanvas.getContext('2d')
     gSelectedColor = localStorage.getItem('selectedColor')
+
+    gGradient = gCtx.createLinearGradient(0, 0, 200, 0)
+    gGradient.addColorStop(0, "#39ace7")
+    gGradient.addColorStop(0.7, "#0784b5")
+    gGradient.addColorStop(1, "#414c50")
 
     if (gSelectedColor) {
         const colorPicker = document.querySelector('.color-picker')
@@ -25,45 +31,9 @@ function onInit() {
 }
 
 function addListiners() {
-
-    //General
-    gElCanvas.addEventListener('click', onCanvasClick)
-    gElCanvas.addEventListener('touchstart', onCanvasClick)
-    document.addEventListener('click', (event) => {
-        if (!event.target.closest('.main-nav') && !event.target.closest('.hamburger')) {
-            hamburger.classList.remove('active')
-            navMenu.classList.remove('active')
-        }
-    })
-
-    //Controls
-    getEl('.btn-back').addEventListener('click', hideEditor)
-    getEl('.text-line').addEventListener('input', onUpdateMemeText)
-    getEl('.color-picker').addEventListener('input', onUpdateTextColor)
-    getEl('.btn-increase-font').addEventListener('click', onIncreaseFontSize)
-    getEl('.btn-decrease-font').addEventListener('click', onDecreaseFontSize)
-    getEl('.btn-add-line').addEventListener('click', onAddLine)
-    getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
-    getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
-    getEl('.font-family-select').addEventListener('change', onUpdateFontFamily)
-    getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'));
-    getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'));
-    getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'));
-
-    getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
-    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
-
-    //Nav
-    getEl('.logo').addEventListener('click', hideEditor)
-    getEl('.gallery-link').addEventListener('click', hideEditor)
-    getEl('.about-link').addEventListener('click', showAbout)
-    getEl('.hamburger').addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active') })
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active')
-            navMenu.classList.remove('active')
-        })
-    })
+    generalListiners()
+    controlsListiners()
+    navBarListiners()
 }
 
 function renderMeme() {
@@ -82,7 +52,9 @@ function renderMeme() {
             gCtx.fillText(line.txt, gElCanvas.width / 2, 40 + idx * 40)
 
             if (idx === meme.selectedLineIdx) {
-                gCtx.strokeStyle = 'black'
+                gCtx.strokeStyle = gGradient
+                gCtx.fillStyle = 'rgba(195, 195, 196, 0.25)'
+                gCtx.fillRect(10, 20 + idx * 40 - line.size + 20, gElCanvas.width - 20, line.size + 10)
                 gCtx.lineWidth = 2
                 gCtx.strokeRect(10, 20 + idx * 40 - line.size + 20, gElCanvas.width - 20, line.size + 10)
             }
@@ -117,6 +89,7 @@ function onUpdateMemeText() {
 function onUpdateTextColor(event) {
     const newColor = event.target.value
     const meme = getMeme()
+
     meme.lines[meme.selectedLineIdx].color = newColor
     saveMemeToStorage(meme)
     saveSelectedColorToStorage(newColor)
@@ -230,6 +203,48 @@ function onCanvasClick(event) {
         renderMeme()
     }
 }
+
+function generalListiners() {
+    gElCanvas.addEventListener('click', onCanvasClick)
+    gElCanvas.addEventListener('touchstart', onCanvasClick)
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.main-nav') && !event.target.closest('.hamburger')) {
+            hamburger.classList.remove('active')
+            navMenu.classList.remove('active')
+        }
+    })
+}
+
+function controlsListiners() {
+    getEl('.btn-back').addEventListener('click', hideEditor)
+    getEl('.text-line').addEventListener('input', onUpdateMemeText)
+    getEl('.color-picker').addEventListener('input', onUpdateTextColor)
+    getEl('.btn-increase-font').addEventListener('click', onIncreaseFontSize)
+    getEl('.btn-decrease-font').addEventListener('click', onDecreaseFontSize)
+    getEl('.btn-add-line').addEventListener('click', onAddLine)
+    getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
+    getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
+    getEl('.font-family-select').addEventListener('change', onUpdateFontFamily)
+    getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'));
+    getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'));
+    getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'));
+    getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
+    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
+}
+
+function navBarListiners() {
+    getEl('.logo').addEventListener('click', hideEditor)
+    getEl('.gallery-link').addEventListener('click', hideEditor)
+    getEl('.about-link').addEventListener('click', showAbout)
+    getEl('.hamburger').addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active') })
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active')
+            navMenu.classList.remove('active')
+        })
+    })
+}
+
 
 function showEditor() {
     const elGallerySection = document.querySelector('.image-gallery')

@@ -1,0 +1,22 @@
+/* SETUP */
+@import url("./setup/vars.css");
+@import url("./setup/typography.css");
+
+/* BASICS  */
+@import url("./basics/base.css");
+@import url("./basics/layout.css");
+@import url("./basics/helpers.css");
+
+/* COMPONENTS */
+@import url("./components/header.css");
+@import url("./components/gallery.css");
+@import url("./components/social-links.css");
+@import url("./components/footer.css");
+@import url("./components/editor.css");
+
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+/* MEDIA QUERIES */
+@import url("./setup/mq.css");

@@ -1,0 +1,112 @@
+/* mobile */
+@media (max-width: 675px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    header {
+        position:fixed;
+        width: 100%;
+        top: 0;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .main-nav {
+        position: fixed;
+        right: -100%;
+        top: 85px;
+        gap: 0;
+        flex-direction: column;
+        background-color: #262626;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .nav-item {
+        margin: 16px 0;
+    }
+
+    .main-nav.active {
+        right: 0;
+    }
+
+    .meme-editor .btn-back {
+        display: none;
+    }
+
+    canvas {
+        width: 350px;
+    }
+
+    .image-gallery .images {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .odd {
+        grid-column: 1;
+    }
+
+    .even {
+        grid-column: 2;
+    }
+
+    .image-gallery .images img {
+        width: 150px;
+    }
+
+    .meme-editor .canvas-container {
+        margin-block-start: 50px;
+    }
+
+    .about {
+        margin-top: 35%;
+    }
+
+}
+
+
+
+/* medium */
+@media (max-width: 950px) {
+    .meme-editor .grid-container {
+        grid-template-columns: 1fr;
+        gap: 0;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .meme-editor .canvas-container {
+        grid-column: 1;
+    }
+
+    .meme-editor .buttons {
+        grid-column: 1;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .meme-editor .dowlonad-link {
+        grid-column: 1;
+        text-align: center;
+        margin-top: 20px;
+    }
+}

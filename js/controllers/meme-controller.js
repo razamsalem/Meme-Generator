@@ -251,6 +251,7 @@ function onCanvasClick(event) {
 
 function generalListiners() {
     gElCanvas.addEventListener('click', onCanvasClick)
+    gElCanvas.addEventListener('mousedown', onCanvasClick)
     gElCanvas.addEventListener('touchstart', onCanvasClick)
     document.addEventListener('click', (event) => {
         if (!event.target.closest('.main-nav') && !event.target.closest('.hamburger')) {

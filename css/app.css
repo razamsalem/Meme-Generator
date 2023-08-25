@@ -1,6 +1,5 @@
 /* SETUP */
 @import url("./setup/vars.css");
-@import url("./setup/typography.css");
 
 /* BASICS  */
 @import url("./basics/base.css");

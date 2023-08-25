@@ -49,10 +49,14 @@
     .meme-editor .btn-back {
         display: none;
     }
-
-    canvas {
-        width: 350px;
+    .canvas-container {
+        width: 100%;
+        overflow: hidden;
     }
+
+    /* canvas {
+        width: 100%;
+    } */
 
     .image-gallery .images {
         display: grid;
@@ -95,6 +99,7 @@
     .meme-editor .canvas-container {
         grid-column: 1;
     }
+    
 
     .meme-editor .buttons {
         grid-column: 1;

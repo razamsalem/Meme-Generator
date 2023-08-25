@@ -16,7 +16,8 @@ var gMeme = {
             txt: 'Your Text',
             size: 20,
             color: '#ffffff',
-            fontFamily: 'Impact'
+            fontFamily: 'Impact',
+            y: 100
         }
     ]
 }

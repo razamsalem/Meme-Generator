@@ -2,7 +2,6 @@
 
 onload = onInit
 
-
 let gElCanvas
 let gCtx
 let gSelectedColor
@@ -49,14 +48,18 @@ function renderMeme() {
             gCtx.fillStyle = line.color
             gCtx.font = `${line.size}px ${line.fontFamily}`
             gCtx.textAlign = line.textAlign || 'center'
-            gCtx.fillText(line.txt, gElCanvas.width / 2, 40 + idx * 40)
+            const lineY = line.y
+            gCtx.fillText(line.txt, gElCanvas.width / 2, lineY)
 
             if (idx === meme.selectedLineIdx) {
-                gCtx.strokeStyle = gGradient
-                gCtx.fillStyle = 'rgba(195, 195, 196, 0.25)'
-                gCtx.fillRect(10, 20 + idx * 40 - line.size + 20, gElCanvas.width - 20, line.size + 10)
-                gCtx.lineWidth = 2
-                gCtx.strokeRect(10, 20 + idx * 40 - line.size + 20, gElCanvas.width - 20, line.size + 10)
+                const textWidth = gCtx.measureText(line.txt).width
+                gCtx.fillStyle = 'rgba(255, 255, 255, 0.4)'
+                gCtx.fillRect(
+                    (gElCanvas.width - textWidth) / 2 - 10,
+                    lineY - line.size,
+                    textWidth + 20,
+                    line.size + 10
+                )
             }
 
         })
@@ -72,6 +75,7 @@ function renderMeme() {
         getEl('.font-family-select').value = selectedLine.fontFamily
         getEl('.text-line').value = selectedLine.txt
         getEl('.color-picker').value = selectedLine.color
+
     }
 }
 
@@ -132,7 +136,8 @@ function onAddLine() {
         txt: 'Your Text',
         size: 20,
         color: '#ffffff',
-        fontFamily: 'Impact'
+        fontFamily: 'Impact',
+        y: 100
     }
 
     const meme = getMeme()
@@ -160,6 +165,24 @@ function onRemoveLine() {
     renderMeme()
 }
 
+function onMoveTextLineUp() {
+    const meme = getMeme()
+    if (meme.selectedLineIdx !== -1) {
+        meme.lines[meme.selectedLineIdx].y -= 15
+        saveMemeToStorage(meme)
+        renderMeme()
+    }
+}
+
+function onMoveTextLineDown() {
+    const meme = getMeme()
+    if (meme.selectedLineIdx !== -1) {
+        meme.lines[meme.selectedLineIdx].y += 15
+        saveMemeToStorage(meme)
+        renderMeme()
+    }
+}
+
 function deselectText() {
     const meme = getMeme()
     meme.selectedLineIdx = -1
@@ -174,18 +197,19 @@ function onStickerClick(event) {
     const emoji = sticker.textContent
     const meme = getMeme()
 
-   const newLine = {
-    txt: emoji,
-    size: 20,
-    color: '#ffffff',
-    fontFamily: 'Impact'
-   }
+    const newLine = {
+        txt: emoji,
+        size: 20,
+        color: '#ffffff',
+        fontFamily: 'Impact',
+        y: 100
+    }
 
-   meme.lines.push(newLine)
-   meme.selectedLineIdx = meme.lines.length -1
+    meme.lines.push(newLine)
+    meme.selectedLineIdx = meme.lines.length - 1
 
-   saveMemeToStorage(meme)
-   renderMeme()
+    saveMemeToStorage(meme)
+    renderMeme()
 }
 
 function onScrollingEmojis(event) {
@@ -198,37 +222,29 @@ function onScrollingEmojis(event) {
 
 function onCanvasClick(event) {
     const canvasPos = gElCanvas.getBoundingClientRect()
-    let canvasX
-    let canvasY
-
-    if (event.type === 'click') {
-        canvasX = event.clientX - canvasPos.left
-        canvasY = event.clientY - canvasPos.top
-    } else if (event.type === 'touchstart') {
-        const touch = event.touches[0]
-        canvasX = touch.clientX - canvasPos.left
-        canvasY = touch.clientY - canvasPos.top
-    }
-
+    const canvasX = event.clientX - canvasPos.left
+    const canvasY = event.clientY - canvasPos.top
     const meme = getMeme()
-    let clickedOnText = false
+
+    meme.selectedLineIdx = -1
 
     meme.lines.forEach((line, idx) => {
-        const lineY = 40 + idx * 40
+        const lineY = line.y - line.size
+        const lineHeight = line.size + 10
+
         if (
-            canvasX >= 10 &&
-            canvasX <= gElCanvas.width - 10 &&
-            canvasY >= lineY - line.size &&
-            canvasY <= lineY
+            canvasX >= (gElCanvas.width - gCtx.measureText(line.txt).width) / 2 - 10 &&
+            canvasX <= (gElCanvas.width + gCtx.measureText(line.txt).width) / 2 + 10 &&
+            canvasY >= lineY &&
+            canvasY <= lineY + lineHeight
         ) {
-            clickedOnText = true
             meme.selectedLineIdx = idx
             renderMeme()
+            return
         }
     })
 
-    if (!clickedOnText) {
-        meme.selectedLineIdx = -1
+    if (meme.selectedLineIdx === -1) {
         renderMeme()
     }
 }
@@ -254,9 +270,11 @@ function controlsListiners() {
     getEl('.btn-switch-line').addEventListener('click', onSwitchLine)
     getEl('.btn-remove-line').addEventListener('click', onRemoveLine)
     getEl('.font-family-select').addEventListener('change', onUpdateFontFamily)
-    getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'));
-    getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'));
-    getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'));
+    getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'))
+    getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'))
+    getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'))
+    getEl('.btn-move-up').addEventListener('click', onMoveTextLineUp)
+    getEl('.btn-move-down').addEventListener('click', onMoveTextLineDown)
     getEl('.stickers-container').addEventListener('click', onStickerClick)
     getEl('.stickers-container').addEventListener('wheel', onScrollingEmojis)
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })

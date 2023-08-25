@@ -167,6 +167,35 @@ function deselectText() {
     renderMeme()
 }
 
+function onStickerClick(event) {
+    const sticker = event.target.closest('.sticker')
+    if (!sticker) return
+
+    const emoji = sticker.textContent
+    const meme = getMeme()
+
+   const newLine = {
+    txt: emoji,
+    size: 20,
+    color: '#ffffff',
+    fontFamily: 'Impact'
+   }
+
+   meme.lines.push(newLine)
+   meme.selectedLineIdx = meme.lines.length -1
+
+   saveMemeToStorage(meme)
+   renderMeme()
+}
+
+function onScrollingEmojis(event) {
+    const stickerContainer = getEl('.stickers-container')
+    const scrollAmount = event.deltaY
+
+    stickerContainer.scrollLeft += scrollAmount
+    event.preventDefault()
+}
+
 function onCanvasClick(event) {
     const canvasPos = gElCanvas.getBoundingClientRect()
     let canvasX
@@ -228,6 +257,8 @@ function controlsListiners() {
     getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'));
     getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'));
     getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'));
+    getEl('.stickers-container').addEventListener('click', onStickerClick)
+    getEl('.stickers-container').addEventListener('wheel', onScrollingEmojis)
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
     getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
 }

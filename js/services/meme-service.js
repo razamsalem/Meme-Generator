@@ -69,7 +69,7 @@ var gImgs = [
     {
         id: 14,
         url: 'img/14.jpg',
-        keywords: ['Movies']
+        keywords: ['movies']
     },
     {
         id: 15,
@@ -79,7 +79,7 @@ var gImgs = [
     {
         id: 16,
         url: 'img/16.jpg',
-        keywords: ['Movies']
+        keywords: ['movies']
     },
     {
         id: 17,
@@ -89,6 +89,51 @@ var gImgs = [
     {
         id: 18,
         url: 'img/18.jpg',
+        keywords: ['funny']
+    },
+    {
+        id: 19,
+        url: 'img/19.jpg',
+        keywords: ['funny']
+    },
+    {
+        id: 20,
+        url: 'img/20.jpg',
+        keywords: ['funny, baby']
+    },
+    {
+        id: 21,
+        url: 'img/21.jpg',
+        keywords: ['funny, movies']
+    },
+    {
+        id: 22,
+        url: 'img/22.jpg',
+        keywords: ['funny, baby']
+    },
+    {
+        id: 23,
+        url: 'img/23.jpg',
+        keywords: ['cat']
+    },
+    {
+        id: 24,
+        url: 'img/24.jpg',
+        keywords: ['political']
+    },
+    {
+        id: 25,
+        url: 'img/25.jpg',
+        keywords: ['movies']
+    },
+    {
+        id: 26,
+        url: 'img/26.jpg',
+        keywords: ['funny ,movies']
+    },
+    {
+        id: 27,
+        url: 'img/27.jpg',
         keywords: ['funny']
     },
 ]
@@ -114,7 +159,7 @@ var gMeme = {
     ]
 }
 
-var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'dog': 11, 'baby': 8, 'political': 2, 'celebrities': 5, 'Movies': 4 }
+var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'dog': 11, 'baby': 8, 'political': 2, 'celebrities': 5, 'movies': 4 }
 
 function setImg(imgId) {
     gMeme.selectedImgId = imgId

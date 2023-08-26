@@ -8,6 +8,7 @@ let gGradient
 onload = onInit
 
 function onInit() {
+    
     gElCanvas = getEl('canvas')
     gCtx = gElCanvas.getContext('2d')
     gSelectedColor = localStorage.getItem('selectedColor')

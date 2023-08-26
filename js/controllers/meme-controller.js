@@ -1,21 +1,16 @@
 'use strict'
 
-onload = onInit
-
 let gElCanvas
 let gCtx
 let gSelectedColor
 let gGradient
 
+onload = onInit
+
 function onInit() {
     gElCanvas = getEl('canvas')
     gCtx = gElCanvas.getContext('2d')
     gSelectedColor = localStorage.getItem('selectedColor')
-
-    gGradient = gCtx.createLinearGradient(0, 0, 200, 0)
-    gGradient.addColorStop(0, "#39ace7")
-    gGradient.addColorStop(0.7, "#0784b5")
-    gGradient.addColorStop(1, "#414c50")
 
     if (gSelectedColor) {
         const colorPicker = document.querySelector('.color-picker')
@@ -103,6 +98,7 @@ function renderSavedMemes() {
     })
 }
 
+// Save the meme to the saved memes section
 function onSavedMemeSelect(idx) {
     const savedMemes = loadLikedMemesFromStorage()
     const selectedMeme = savedMemes[idx]
@@ -219,10 +215,7 @@ function onMoveLineDown() {
     }
 }
 
-function onBtnClickBeat() {
-
-}
-
+//generating randome meme for "I'm Flexible" button
 function generateRandomMeme() {
     const meme = getMeme()
     const randomImgId = getRandomImgId()
@@ -250,6 +243,7 @@ function generateRandomMeme() {
     showEditor()
 }
 
+// Deselecting the text for not show the select effect when downloading (or when cliking outside the text)
 function deselectText() {
     const meme = getMeme()
     meme.selectedLineIdx = -1
@@ -279,6 +273,7 @@ function onStickerClick(event) {
     renderMeme()
 }
 
+// Option to scroll via the mouse wheel
 function onScrollingEmojis(event) {
     const stickerContainer = getEl('.stickers-container')
     const scrollAmount = event.deltaY
@@ -296,6 +291,7 @@ function onSaveLikedMeme() {
     renderSavedMemes()
 }
 
+// Open the help center
 function onClickHelpCenter() {
     const elInstruction = getEl('.insturctions')
     const elCaretUp = getEl('.fa-caret-up')
@@ -383,9 +379,11 @@ function controlsListiners() {
     getEl('.stickers-container').addEventListener('click', onStickerClick)
     getEl('.stickers-container').addEventListener('wheel', onScrollingEmojis)
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
-    getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
+    getEl('.a-download').addEventListener('click', (event) => { onDownloadMeme(event.currentTarget) })
     getEl('.btn-like').addEventListener('click', onSaveLikedMeme)
     getEl('.help-center').addEventListener('click', onClickHelpCenter)
+    getEl('.btn-upload').addEventListener('mouseover',() => { deselectText() })
+    getEl('.btn-upload').addEventListener('click', onUploadImg)
 }
 
 function navBarListiners() {
@@ -456,7 +454,41 @@ function showAbout() {
 
 }
 
-function downloadMeme(elLink) {
+function onUploadImg() {
+    const imgDataUrl = gElCanvas.toDataURL('image/jpeg') 
+
+    function onSuccess(uploadedImgUrl) {
+        const url = encodeURIComponent(uploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&t=${url}`)
+    }
+    doUploadImg(imgDataUrl, onSuccess)
+}
+
+function doUploadImg(imgDataUrl, onSuccess) {
+
+    const formData = new FormData()
+    formData.append('img', imgDataUrl)
+
+
+    const XHR = new XMLHttpRequest()
+    XHR.onreadystatechange = () => {
+
+        if (XHR.readyState !== XMLHttpRequest.DONE) return
+
+        if (XHR.status !== 200) return console.error('Error uploading image')
+        const { responseText: url } = XHR
+
+        console.log('Got back live url:', url)
+        onSuccess(url)
+    }
+    XHR.onerror = (req, ev) => {
+        console.error('Error connecting to server with request:', req, '\nGot response data:', ev)
+    }
+    XHR.open('POST', '//ca-upload.com/here/upload.php')
+    XHR.send(formData)
+}
+
+function onDownloadMeme(elLink) {
     const dataUrl = gElCanvas.toDataURL()
     elLink.href = dataUrl
 }

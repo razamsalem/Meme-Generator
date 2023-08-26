@@ -1,17 +1,26 @@
-.meme-editor .a-download {
+.meme-editor .a-download ,
+.meme-editor .btn-upload {
     display: inline-block;
     position: relative;
     padding: 10px 20px;
     background-color: #f0f0f0;
     color: #333;
+    border: none;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+
+}
+
+.meme-editor .btn-upload {
+    padding: 12px 45px;
 }
 
 
 .meme-editor .a-download:hover,
-.meme-editor .a-download:focus {
+.meme-editor .a-download:focus,
+.meme-editor .btn-upload:hover {
     background-color: #333;
     color: var(--clrPrimary-1);
 }
@@ -129,7 +138,7 @@ canvas {
 }
 
 .help-center {
-    cursor: pointer;
+    cursor: help;
 }
 
 .insturctions {
@@ -138,4 +147,5 @@ canvas {
     border: 3px solid var(--clrPrimary-1);
     border-radius: 25px;
     margin: 20px;
+    cursor: auto;
 }

@@ -102,12 +102,19 @@ var gMeme = {
             size: 20,
             color: '#ffffff',
             fontFamily: 'Impact',
-            y: 50
-        }
+            y: 50,
+        },
+        {
+            txt: 'Your Text',
+            size: 20,
+            color: '#ffffff',
+            fontFamily: 'Impact',
+            y: 450
+        },
     ]
 }
 
-var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16,  'dog': 11 , 'baby': 8,'political': 2, 'celebrities' : 5 , 'Movies': 4  }
+var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'dog': 11, 'baby': 8, 'political': 2, 'celebrities': 5, 'Movies': 4 }
 
 function setImg(imgId) {
     gMeme.selectedImgId = imgId
@@ -115,4 +122,9 @@ function setImg(imgId) {
 
 function getMeme() {
     return gMeme
+}
+
+function getRandomImgId() {
+    const randIdx = getRandomIntInclusive(1, gImgs.length)
+    return gImgs[randIdx].id
 }

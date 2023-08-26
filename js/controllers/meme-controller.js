@@ -27,6 +27,7 @@ function onInit() {
     loadCurrState()
     loadSelectedImg()
     renderMeme()
+    renderSavedMemes()
 }
 
 function addListiners() {
@@ -77,6 +78,41 @@ function renderMeme() {
         getEl('.color-picker').value = selectedLine.color
 
     }
+}
+
+function renderSavedMemes() {
+    const elSavedMemesSection = document.querySelector('.saved-memes .images')
+    const savedMemes = loadLikedMemesFromStorage()
+    let strHTMLs = ''
+
+    if (savedMemes) {
+        savedMemes.forEach((meme, idx) => {
+            strHTMLs += `
+                <div class="saved-meme" onclick="onSavedMemeSelect(${idx}); showEditor()">
+                <canvas class="saved-meme-canvas" width="450" height="450"></canvas>
+            </div>
+                `
+        })
+    }
+    elSavedMemesSection.innerHTML = strHTMLs
+
+    savedMemes.forEach((meme, idx) => {
+        const canvas = document.querySelectorAll('.saved-meme-canvas')[idx]
+        const ctx = canvas.getContext('2d')
+        renderSavedMemeOnCanvas(meme, canvas, ctx)
+    })
+}
+
+function onSavedMemeSelect(idx) {
+    const savedMemes = loadLikedMemesFromStorage()
+    const selectedMeme = savedMemes[idx]
+
+    gMeme = selectedMeme
+    saveSelectedImgToStorage(selectedMeme.selectedImgId)
+
+    gMeme.lines = selectedMeme.lines
+
+    renderMeme()
 }
 
 function onUpdateMemeText() {
@@ -137,7 +173,7 @@ function onAddLine() {
         size: 20,
         color: '#ffffff',
         fontFamily: 'Impact',
-        y: 450
+        y: 250
     }
 
     const meme = getMeme()
@@ -183,6 +219,10 @@ function onMoveLineDown() {
     }
 }
 
+function onBtnClickBeat() {
+
+}
+
 function generateRandomMeme() {
     const meme = getMeme()
     const randomImgId = getRandomImgId()
@@ -203,16 +243,11 @@ function generateRandomMeme() {
         y: 450
     }
 
-    meme.lines = [line1,line2]
+    meme.lines = [line1, line2]
     meme.selectedLineIdx = 0
     saveMemeToStorage(meme)
     renderMeme()
     showEditor()
-}
-
-function getRandomImgId() {
-    const randIdx = getRandomIntInclusive(1, gImgs.length) 
-    return gImgs[randIdx].id
 }
 
 function deselectText() {
@@ -252,6 +287,15 @@ function onScrollingEmojis(event) {
     event.preventDefault()
 }
 
+function onSaveLikedMeme() {
+    const elLikeBtn = getEl('.btn-like')
+    elLikeBtn.innerHTML = '<i class="fa-solid fa-heart fa-beat fa-xl" style="color: #ff0000;"></i>'
+    
+    const meme = getMeme()
+    saveLikedMemeToStorage(meme)
+    renderSavedMemes()
+}
+
 function onCanvasClick(event) {
     const canvasPos = gElCanvas.getBoundingClientRect()
     const canvasX = event.clientX - canvasPos.left
@@ -281,6 +325,21 @@ function onCanvasClick(event) {
     }
 }
 
+function renderSavedMemeOnCanvas(meme, canvas, ctx) {
+    const elImg = new Image()
+    elImg.src = `img/${meme.selectedImgId}.jpg`
+    elImg.onload = () => {
+        ctx.drawImage(elImg, 0, 0, canvas.width, canvas.height)
+
+        meme.lines.forEach(line => {
+            ctx.fillStyle = line.color
+            ctx.font = `${line.size}px ${line.fontFamily}`
+            ctx.textAlign = line.textAlign || 'center'
+            ctx.fillText(line.txt, canvas.width / 2, line.y)
+        })
+    }
+}
+
 function generalListiners() {
     gElCanvas.addEventListener('click', onCanvasClick)
     gElCanvas.addEventListener('mousedown', onCanvasClick)
@@ -293,9 +352,11 @@ function generalListiners() {
     })
 }
 
+
+
 function controlsListiners() {
     getEl('.btn-flexible').addEventListener('click', generateRandomMeme)
-    getEl('.btn-back').addEventListener('click', hideEditor)
+    getEl('.btn-back').addEventListener('click', showGallery)
     getEl('.text-line').addEventListener('input', onUpdateMemeText)
     getEl('.color-picker').addEventListener('input', onUpdateTextColor)
     getEl('.btn-increase-font').addEventListener('click', onIncreaseFontSize)
@@ -313,11 +374,13 @@ function controlsListiners() {
     getEl('.stickers-container').addEventListener('wheel', onScrollingEmojis)
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
     getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
+    getEl('.btn-like').addEventListener('click', onSaveLikedMeme)
 }
 
 function navBarListiners() {
-    getEl('.logo').addEventListener('click', hideEditor)
-    getEl('.gallery-link').addEventListener('click', hideEditor)
+    getEl('.logo').addEventListener('click', showGallery)
+    getEl('.gallery-link').addEventListener('click', showGallery)
+    getEl('.saved-memes-link').addEventListener('click', showSavedMemes)
     getEl('.about-link').addEventListener('click', showAbout)
     getEl('.hamburger').addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active') })
     navLinks.forEach(link => {
@@ -328,37 +391,55 @@ function navBarListiners() {
     })
 }
 
-
 function showEditor() {
-    const elGallerySection = document.querySelector('.image-gallery')
-    const elMemeEditorSection = document.querySelector('.meme-editor')
-    const elAboutSection = document.querySelector('.about')
+    const elGallerySection = getEl('.image-gallery')
+    const elMemesSection = getEl('.saved-memes')
+    const elMemeEditorSection = getEl('.meme-editor')
+    const elAboutSection = getEl('.about')
 
     elGallerySection.classList.add('hidden')
+    elMemesSection.classList.add('hidden')
     elAboutSection.classList.add('hidden')
     elMemeEditorSection.classList.remove('hidden')
 
     saveStateToStorage('memeEditor')
 }
 
-function hideEditor() {
-    const elGallerySection = document.querySelector('.image-gallery')
-    const elMemeEditorSection = document.querySelector('.meme-editor')
-    const elAboutSection = document.querySelector('.about')
+function showGallery() {
+
+    const elGallerySection = getEl('.image-gallery')
+    const elMemesSection = getEl('.saved-memes')
+    const elMemeEditorSection = getEl('.meme-editor')
+    const elAboutSection = getEl('.about')
 
     elGallerySection.classList.remove('hidden')
+    elMemesSection.classList.add('hidden')
     elMemeEditorSection.classList.add('hidden')
     elAboutSection.classList.add('hidden')
 
     saveStateToStorage('gallery')
 }
 
-function showAbout() {
-    const elGallerySection = document.querySelector('.image-gallery')
-    const elMemeEditorSection = document.querySelector('.meme-editor')
-    const elAboutSection = document.querySelector('.about')
+function showSavedMemes() {
+    const elMemesSection = getEl('.saved-memes')
+    const elGallerySection = getEl('.image-gallery')
+    const elMemeEditorSection = getEl('.meme-editor')
+    const elAboutSection = getEl('.about')
 
     elGallerySection.classList.add('hidden')
+    elMemesSection.classList.remove('hidden')
+    elMemeEditorSection.classList.add('hidden')
+    elAboutSection.classList.add('hidden')
+}
+
+function showAbout() {
+    const elGallerySection = getEl('.image-gallery')
+    const elMemesSection = getEl('.saved-memes')
+    const elMemeEditorSection = getEl('.meme-editor')
+    const elAboutSection = getEl('.about')
+
+    elGallerySection.classList.add('hidden')
+    elMemesSection.classList.add('hidden')
     elMemeEditorSection.classList.add('hidden')
     elAboutSection.classList.remove('hidden')
 

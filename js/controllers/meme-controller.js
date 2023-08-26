@@ -296,6 +296,16 @@ function onSaveLikedMeme() {
     renderSavedMemes()
 }
 
+function onClickHelpCenter() {
+    const elInstruction = getEl('.insturctions')
+    const elCaretUp = getEl('.fa-caret-up')
+    const elCaretDown = getEl('.fa-caret-down')
+    
+    elInstruction.classList.toggle('hidden')
+    elCaretUp.classList.toggle('hidden')
+    elCaretDown.classList.toggle('hidden')
+}
+
 function onCanvasClick(event) {
     const canvasPos = gElCanvas.getBoundingClientRect()
     const canvasX = event.clientX - canvasPos.left
@@ -375,6 +385,7 @@ function controlsListiners() {
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })
     getEl('.a-download').addEventListener('click', (event) => { downloadMeme(event.currentTarget) })
     getEl('.btn-like').addEventListener('click', onSaveLikedMeme)
+    getEl('.help-center').addEventListener('click', onClickHelpCenter)
 }
 
 function navBarListiners() {

@@ -127,3 +127,15 @@ canvas {
 .buttons:hover {
     box-shadow: 20px 0 60px rgba(7,132,181,0.1), -20px 0 60px rgba(7,132,181,0.1);
 }
+
+.help-center {
+    cursor: pointer;
+}
+
+.insturctions {
+    background-color: #fff;
+    padding-inline: 10px;
+    border: 3px solid var(--clrPrimary-1);
+    border-radius: 25px;
+    margin: 20px;
+}

@@ -26,3 +26,8 @@
 .image-gallery .images {
     display: block;
 }
+
+.help-center {
+    grid-column: 2/4;
+    text-align: center;
+}

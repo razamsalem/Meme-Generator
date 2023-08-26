@@ -18,5 +18,5 @@ header a {
 }
 
 header a:hover {
-    color: #c6c5c5;
+    color: var(--clrPrimary);
 }

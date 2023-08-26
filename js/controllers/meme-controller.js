@@ -137,7 +137,7 @@ function onAddLine() {
         size: 20,
         color: '#ffffff',
         fontFamily: 'Impact',
-        y: 100
+        y: 450
     }
 
     const meme = getMeme()
@@ -165,22 +165,54 @@ function onRemoveLine() {
     renderMeme()
 }
 
-function onMoveTextLineUp() {
+function onMoveLineUp() {
     const meme = getMeme()
     if (meme.selectedLineIdx !== -1) {
-        meme.lines[meme.selectedLineIdx].y -= 15
+        meme.lines[meme.selectedLineIdx].y -= 50
         saveMemeToStorage(meme)
         renderMeme()
     }
 }
 
-function onMoveTextLineDown() {
+function onMoveLineDown() {
     const meme = getMeme()
     if (meme.selectedLineIdx !== -1) {
-        meme.lines[meme.selectedLineIdx].y += 15
+        meme.lines[meme.selectedLineIdx].y += 50
         saveMemeToStorage(meme)
         renderMeme()
     }
+}
+
+function generateRandomMeme() {
+    const meme = getMeme()
+    const randomImgId = getRandomImgId()
+    setImg(randomImgId)
+
+    const line1 = {
+        txt: 'Line 1',
+        size: 20,
+        color: '#ffffff',
+        fontFamily: 'Impact',
+        y: 50
+    }
+    const line2 = {
+        txt: 'Line 2',
+        size: 20,
+        color: '#ffffff',
+        fontFamily: 'Impact',
+        y: 450
+    }
+
+    meme.lines = [line1,line2]
+    meme.selectedLineIdx = 0
+    saveMemeToStorage(meme)
+    renderMeme()
+    showEditor()
+}
+
+function getRandomImgId() {
+    const randIdx = getRandomIntInclusive(1, gImgs.length) 
+    return gImgs[randIdx].id
 }
 
 function deselectText() {
@@ -262,6 +294,7 @@ function generalListiners() {
 }
 
 function controlsListiners() {
+    getEl('.btn-flexible').addEventListener('click', generateRandomMeme)
     getEl('.btn-back').addEventListener('click', hideEditor)
     getEl('.text-line').addEventListener('input', onUpdateMemeText)
     getEl('.color-picker').addEventListener('input', onUpdateTextColor)
@@ -274,8 +307,8 @@ function controlsListiners() {
     getEl('.btn-align-left').addEventListener('click', () => onUpdateTextAlignment('left'))
     getEl('.btn-align-center').addEventListener('click', () => onUpdateTextAlignment('center'))
     getEl('.btn-align-right').addEventListener('click', () => onUpdateTextAlignment('right'))
-    getEl('.btn-move-up').addEventListener('click', onMoveTextLineUp)
-    getEl('.btn-move-down').addEventListener('click', onMoveTextLineDown)
+    getEl('.btn-move-up').addEventListener('click', onMoveLineUp)
+    getEl('.btn-move-down').addEventListener('click', onMoveLineDown)
     getEl('.stickers-container').addEventListener('click', onStickerClick)
     getEl('.stickers-container').addEventListener('wheel', onScrollingEmojis)
     getEl('.a-download').addEventListener('mouseover', () => { deselectText() })

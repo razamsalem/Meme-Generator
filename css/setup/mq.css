@@ -83,6 +83,9 @@
         margin-top: 35%;
     }
 
+    .btn-flexible {
+        margin-block-start: 20px;
+    }
 }
 
 

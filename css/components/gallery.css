@@ -18,6 +18,7 @@
 
 .image-gallery #filter-input {
     border: 2px solid var(--clrPrimary);
+    border-radius: 20px;
 }
 
 .btn-flexible {

@@ -2,6 +2,7 @@
 const navLinks = document.querySelectorAll('.main-nav a')
 const hamburger = getEl('.hamburger')
 const navMenu = getEl('.main-nav')
+const filterInput = getEl('#filter-input')
 
 function getEl(selector){
     return document.querySelector(selector)

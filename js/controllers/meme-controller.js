@@ -388,6 +388,19 @@ function controlsListiners() {
     getEl('.help-center').addEventListener('click', onClickHelpCenter)
     getEl('.btn-upload').addEventListener('mouseover',() => { deselectText() })
     getEl('.btn-upload').addEventListener('click', onUploadImg)
+    filterInput.addEventListener('input', () => {
+        const filterValue = filterInput.value.toLowerCase()
+        const imgs = document.querySelectorAll('.img-item')
+    
+        imgs.forEach(img => {
+            const keywords = gImgs[img.dataset.idx].keywords
+            if (keywords.some(keyword => keyword.includes(filterValue))) {
+                img.style.display = 'inline'
+            } else {
+                img.style.display = 'none'
+            }
+        })
+    })
 }
 
 function navBarListiners() {

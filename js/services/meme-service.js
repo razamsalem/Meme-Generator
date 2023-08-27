@@ -169,6 +169,10 @@ function getMeme() {
     return gMeme
 }
 
+function getImgs() {
+    return gImgs
+}
+
 function getRandomImgId() {
     const randIdx = getRandomIntInclusive(1, gImgs.length)
     return gImgs[randIdx].id

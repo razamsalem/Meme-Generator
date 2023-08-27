@@ -56,7 +56,6 @@
 .meme-editor .color-picker {
     margin-block-start: 0;
     width: 100%;
-    padding: 8px;
     border: none;
     border-radius: 4px;
 }
@@ -66,7 +65,7 @@
     width: calc(100% - 16px);
 }
 
-canvas {
+.meme-editor canvas {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 

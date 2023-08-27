@@ -1,7 +1,5 @@
 'use strict'
 
-renderGallery()
-
 function renderGallery() {
     const elImgSection = document.querySelector('.images')
 

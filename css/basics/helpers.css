@@ -24,3 +24,8 @@
     list-style-type: none;
 }
 
+/* effects */
+
+.hidden {
+    display: none;
+}

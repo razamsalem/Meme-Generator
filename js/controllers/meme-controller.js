@@ -17,7 +17,7 @@ function onInit() {
         const colorPicker = document.querySelector('.color-picker')
         colorPicker.value = gSelectedColor
     }
-
+    renderGallery()
     addListiners()
     loadMemeFromStorage()
     loadCurrState()
@@ -49,7 +49,7 @@ function renderMeme() {
             gCtx.fillText(line.txt, gElCanvas.width / 2, lineY)
 
             if (idx === meme.selectedLineIdx) {
-                const textWidth = gCtx.measureText(line.txt).width
+                const textWidth = gElCanvas.width * 1
                 gCtx.fillStyle = 'rgba(255, 255, 255, 0.4)'
                 gCtx.fillRect(
                     (gElCanvas.width - textWidth) / 2 - 10,
@@ -193,7 +193,7 @@ function onRemoveLine() {
     if (meme.lines.length <= 1) return
     meme.lines.splice(meme.selectedLineIdx, 1)
     meme.selectedLineIdx = Math.max(0, meme.selectedLineIdx - 1)
-
+    flashMsg('The line has been deleted')
     saveMemeToStorage(meme)
     renderMeme()
 }
@@ -286,7 +286,10 @@ function onScrollingEmojis(event) {
 function onSaveLikedMeme() {
     const elLikeBtn = getEl('.btn-like')
     elLikeBtn.innerHTML = '<i class="fa-solid fa-heart fa-beat fa-xl" style="color: #ff0000;"></i>'
-    
+    setTimeout(() => {
+        elLikeBtn.innerHTML = '<i class="fa-solid fa-heart fa-xl" style="color: #ff0000;"></i>'
+    }, 1000)
+    flashMsg('Meme successfully saved')
     const meme = getMeme()
     saveLikedMemeToStorage(meme)
     renderSavedMemes()
@@ -455,6 +458,14 @@ function showAbout() {
 
 }
 
+function flashMsg(msg) {
+    const elMsg = document.querySelector('.user-msg')
+
+    elMsg.innerText = msg
+    elMsg.classList.add('open')
+    setTimeout(() => elMsg.classList.remove('open'), 3000)
+}
+
 function onUploadImg() {
     const imgDataUrl = gElCanvas.toDataURL('image/jpeg') 
 
@@ -492,4 +503,5 @@ function doUploadImg(imgDataUrl, onSuccess) {
 function onDownloadMeme(elLink) {
     const dataUrl = gElCanvas.toDataURL()
     elLink.href = dataUrl
+    flashMsg('Meme downloaded successfully')
 }

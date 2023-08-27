@@ -12,6 +12,7 @@
 }
 
 .image-gallery img:hover {
+    filter: brightness(1.1);
     box-shadow: 20px 0 60px rgba(7,132,181,0.2), -20px 0 60px rgba(7,132,181,0.2);
 }
 
